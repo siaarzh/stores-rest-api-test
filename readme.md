@@ -31,7 +31,22 @@ Set up for Pycharm Docker plugin:
        --name unittests \
        --link postgres \
        automated-testing:section06 \
-       python -m unittest discover tests
+       python -m unittest
     ```
+    
     > Note: we are not using `--rm` flag here, this is because the PyCharm Docker plugin does not remove containers correctly.
     You will have to remove the container manually after every run (for now).
+    
+    You can also run
+    
+    - `python -m unittest discover -v -s tests/unit -t . -p "test_*.py"` to perform unit tests only and
+    - `python -m unittest discover -v -s tests/integration -t . -p "test_*.py"` to just run integration tests
+    
+    Where:
+    
+    - `-v` verbose
+    - `-s <start directory>` where to look for test cases
+    - `-t <top level directory>` where your top directory is, (`.` means source code root)
+    - `-p <pattern>` file naming pattern for test cases
+    
+    

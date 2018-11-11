@@ -5,7 +5,7 @@ This class should be the parent class to each non-unit test.
 It allows for instantiation of the database dynamically
 and makes sure that it is a new, blank database each time.
 """
-
+import os
 from unittest import TestCase
 from app import app
 from db import db
@@ -14,7 +14,8 @@ from db import db
 class IntegrationBaseTest(TestCase):
     def setUp(self):
         # Make sure database exists
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:password@localhost/python_testing'
+        # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:password@localhost/python_testing'
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
         with app.app_context():
             db.init_app(app)
             db.create_all()

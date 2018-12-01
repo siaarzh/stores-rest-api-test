@@ -4,9 +4,11 @@ This is built with Flask, Flask-RESTful, Flask-JWT, and Flask-SQLAlchemy.
 
 Deployed with Docker.
 
-## Section 6
+## Section 7
 
 > Note: at this point I have switched to developing all my apps with Docker
+
+> Note 2: This section code stars at end of last section.
 
 Set up for Pycharm Docker plugin:
 

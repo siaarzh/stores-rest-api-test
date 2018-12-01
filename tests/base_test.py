@@ -11,16 +11,20 @@ from app import app
 from db import db
 
 
-class IntegrationBaseTest(TestCase):
-    def setUp(self):
-        # Make sure database exists
-        # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:password@localhost/python_testing'
+class BaseTest(TestCase):
+    @classmethod
+    def setUpClass(cls):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
         with app.app_context():
             db.init_app(app)
+
+    def setUp(self):
+        # Make sure database exists
+        # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:password@localhost/python_testing'
+        with app.app_context():
             db.create_all()
         # Get a test client
-        self.app = app.test_client()
+        self.app = app.test_client
         self.app_context = app.app_context
 
     def tearDown(self):

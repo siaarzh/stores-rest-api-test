@@ -15,6 +15,9 @@ class BaseTest(TestCase):
     @classmethod
     def setUpClass(cls):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+        # Handle error message when running ALL system tests
+        app.config['DEBUG'] = False
+        app.config['PROPAGATE_EXCEPTIONS'] = True
         with app.app_context():
             db.init_app(app)
 

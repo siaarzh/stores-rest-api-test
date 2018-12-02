@@ -1,3 +1,5 @@
+pm.environment.unset("jwt_token")
+
 tests["Response time is less than 200ms"] = responseTime < 200;
 
 var jsonData = JSON.parse(responseBody);

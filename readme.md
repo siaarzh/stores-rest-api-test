@@ -4,18 +4,18 @@ This is built with Flask, Flask-RESTful, Flask-JWT, and Flask-SQLAlchemy.
 
 Deployed with Docker.
 
-## Section 7
+## Section 8
 
-> Note: at this point I have switched to developing all my apps with Docker
+### Testing
 
-> Note 2: This section code stars at end of last section.
+> Note : This section code stars at end of last section.
 
 Set up for Pycharm Docker plugin:
 
 1. Build local Flask app image:
 
     ```bash
-    $ docker build --rm -t automated-testing:section06 .
+    $ docker build --rm -t automated_testing:section08 .
     ```
 2. Start Postgres container:
 
@@ -32,7 +32,7 @@ Set up for Pycharm Docker plugin:
        --env DATABASE_URL=postgresql://postgres:password@postgres:5432/ \
        --name unittests \
        --link postgres \
-       automated-testing:section06 \
+       automated_testing:section08 \
        python -m unittest
     ```
     
@@ -50,5 +50,20 @@ Set up for Pycharm Docker plugin:
     - `-s <start directory>` where to look for test cases
     - `-t <top level directory>` where your top directory is, (`.` means source code root)
     - `-p <pattern>` file naming pattern for test cases
+
+### Running App
+
+You may also choose to run the app so that it is possible to run API tests using an external tool, e.g. Postman.
+
+- Simply repeat steps 1 and 2 of the [Testing](#testing) section, then run the following command:
+
+    ```bash
+    $ docker run -v "C:\MOOC18\Automated Software Testing with Python\section6\code:/code" \
+       --env DATABASE_URL=postgresql://postgres:password@postgres:5432/ \
+       --name app \
+       --link postgres \
+       automated_testing:section08 \
+       python app.py
+    ```
     
-    
+    This *should* expose port `5000` on localhost.

@@ -8,7 +8,7 @@ Deployed with Docker.
 
 ### Testing
 
-> Note : This section code stars at end of last section.
+> Note : This section code starts at the end of last section.
 
 Set up for Pycharm Docker plugin:
 

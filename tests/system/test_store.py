@@ -12,7 +12,7 @@ class StoreTest(BaseTest):
 
                 self.assertEqual(response.status_code, 201)
                 self.assertIsNotNone(StoreModel.find_by_name('Books'))
-                self.assertDictEqual({'name': 'Books', 'items': []},
+                self.assertDictEqual({'id': 1, 'name': 'Books', 'items': []},
                                      json.loads(response.data))
 
     def test_create_duplicate_store(self):
@@ -42,7 +42,7 @@ class StoreTest(BaseTest):
 
                 self.assertEqual(response.status_code, 200)
                 self.assertIsNotNone(StoreModel.find_by_name('Books'))
-                self.assertDictEqual({'name': 'Books', 'items': []},
+                self.assertDictEqual({'id': 1, 'name': 'Books', 'items': []},
                                      json.loads(response.data))
 
     def test_store_not_found(self):
@@ -64,7 +64,7 @@ class StoreTest(BaseTest):
 
                 self.assertEqual(response.status_code, 200)
                 self.assertIsNotNone(StoreModel.find_by_name('Books'))
-                self.assertDictEqual({'name': 'Books', 'items': [
+                self.assertDictEqual({'id': 1, 'name': 'Books', 'items': [
                     {
                         'name': 'Alice',
                         'price': 19.99
@@ -83,10 +83,12 @@ class StoreTest(BaseTest):
                 self.assertDictEqual({
                     'stores': [
                         {
+                            'id': 1,
                             'name': 'Books',
                             'items': []
                         },
                         {
+                            'id': 2,
                             'name': 'Bikes',
                             'items': []
                         }
@@ -107,6 +109,7 @@ class StoreTest(BaseTest):
                 self.assertDictEqual({
                     'stores': [
                         {
+                            'id': 1,
                             'name': 'Books',
                             'items': [
                                 {
@@ -116,6 +119,7 @@ class StoreTest(BaseTest):
                             ]
                         },
                         {
+                            'id': 2,
                             'name': 'Bikes',
                             'items': [
                                 {

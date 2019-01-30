@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/siaarzh/stores-rest-api-test.svg?branch=master)](https://travis-ci.org/siaarzh/stores-rest-api-test)
+
 # Stores REST API Testing
 
 Based on [Udemy course on TDD](https://www.udemy.com/automated-software-testing-with-python).

@@ -1,0 +1,30 @@
+version: '3.6'
+
+services:
+  postgres:
+    image: postgres:9.6
+    networks:
+      - backend
+    environment:
+      - POSTGRES_PASSWORD=password
+  app:
+    image: automated_testing:section08
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - backend
+    environment:
+      DATABASE_URL: postgres://postgres:password@postgres:5432
+    volumes:
+      - .:/code
+    command: python -m unittest discover -v -s tests -t . -p 'test_*.py'
+    entrypoint: ./entrypoint.sh postgres 5432
+    depends_on:
+      - postgres
+
+
+networks:
+  backend:
+    driver: overlay
+    attachable: true

@@ -6,6 +6,51 @@
 	},
 	"item": [
 		{
+			"name": "/stores empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e78f7c82-2aa4-44c6-af88-4433c23115a0",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"List of stores returned\"] = jsonData.stores.isEmpty();",
+							"",
+							"tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+							"",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+							"tests[\"Content-Type is 'application/json'\"] = postman.getResponseHeader(\"Content-Type\") === 'application/json';"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/stores",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"stores"
+					]
+				},
+				"description": "this should return a list of stores, each in a JSON format."
+			},
+			"response": []
+		},
+		{
 			"name": "/register",
 			"event": [
 				{

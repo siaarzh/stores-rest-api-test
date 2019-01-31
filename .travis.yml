@@ -17,7 +17,9 @@ install:
   - docker-compose build
 
 script:
-#  - docker-compose -f docker-compose.unittests.yml run test
+  - docker-compose -f docker-compose.unittests.yml run test
+  - docker-compose down
+  - sleep 5
   - docker-compose -f docker-compose.newmantests.yml run newmantest
 
 env:

@@ -7,6 +7,11 @@ services:
       - backend
     environment:
       - POSTGRES_PASSWORD=password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   test:
     image: automated_testing:section08
     build:
@@ -16,11 +21,9 @@ services:
       - backend
     environment:
       DATABASE_URL: postgres://postgres:password@postgres:5432
-#      DATABASE_URL: sqlite:///data.db
     volumes:
       - .:/code
-    command: python -m unittest discover -v -s tests -t . -p 'test_*.py'
-    entrypoint: ./entrypoint.sh postgres 5432
+    command: ["/wait-for-it/wait-for-it.sh", "postgres:5432", "--", "python", "-m", "unittest", "discover", "-v", "-s", "tests", "-t", ".", "-p", "test_*.py"]
     depends_on:
       - postgres
 

@@ -7,6 +7,11 @@ services:
       - backend
     environment:
       - POSTGRES_PASSWORD=password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   app:
     image: automated_testing:section08
     build:

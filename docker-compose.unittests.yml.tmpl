@@ -15,8 +15,7 @@ services:
     networks:
       - backend
     environment:
-      DATABASE_URL: postgres://postgres:password@postgres:5432
-#      DATABASE_URL: sqlite:///data.db
+      DATABASE_URL: ${DATABASE_URL}
     volumes:
       - .:/code
     command: python -m unittest discover -v -s tests -t . -p 'test_*.py'

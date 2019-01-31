@@ -23,7 +23,7 @@ services:
     command: python app.py
     depends_on:
       - postgres
-  newman:
+  newmantest:
     network_mode: host
     image: postman/newman:alpine
     volumes:

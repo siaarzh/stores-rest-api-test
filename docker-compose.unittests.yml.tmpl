@@ -7,11 +7,6 @@ services:
       - backend
     environment:
       - POSTGRES_PASSWORD=password
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
   test:
     image: automated_testing:section08
     build:
@@ -20,7 +15,7 @@ services:
     networks:
       - backend
     environment:
-      DATABASE_URL: postgres://postgres:password@postgres:5432
+      DATABASE_URL: ${DATABASE_URL}
     volumes:
       - .:/code
     command: ["/wait-for-it/wait-for-it.sh", "postgres:5432", "--", "python", "-m", "unittest", "discover", "-v", "-s", "tests", "-t", ".", "-p", "test_*.py"]

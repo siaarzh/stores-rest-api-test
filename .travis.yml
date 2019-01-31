@@ -1,10 +1,32 @@
-language: python
-python:
-  - "3.6"
-  - "nightly"
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker swarm init
+
 install:
-  - "pip install pytest"
-  - "pip install -r requirements.txt"
+  - sed -e 's/${PYTHON_VERSION}/'${PYTHON_VERSION}/g Dockerfile.tmpl  > Dockerfile
+  - sed -e 's|${DATABASE_URL}|'"$DATABASE_URL"'|g' docker-compose.unittests.yml.tmpl  > docker-compose.unittests.yml
+  - sed -e 's|${DATABASE_URL}|'"$DATABASE_URL"'|g' docker-compose.newmantests.yml.tmpl  > docker-compose.newmantests.yml
+  - docker-compose build
+
+script:
+  - docker-compose -f docker-compose.unittests.yml run test
+  - docker-compose down
+  - sleep 5
+  - docker-compose -f docker-compose.newmantests.yml run newmantest
+
 env:
-  - DATABASE_URL="sqlite:///data.db"
-script: python -m pytest tests/
+  global:
+    - DOCKER_COMPOSE_VERSION=1.23.2
+  matrix:
+    - PYTHON_VERSION="3.6" DATABASE_URL="postgres://postgres:password@postgres:5432"
+    - PYTHON_VERSION="3.7" DATABASE_URL="postgres://postgres:password@postgres:5432"
+    - PYTHON_VERSION="3.6" DATABASE_URL="sqlite:///data.db"
+    - PYTHON_VERSION="3.7" DATABASE_URL="sqlite:///data.db"

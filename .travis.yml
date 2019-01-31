@@ -11,8 +11,8 @@ before_install:
 
 install:
   - sed -e 's/${PYTHON_VERSION}/'${PYTHON_VERSION}/g Dockerfile.tmpl  > Dockerfile
-  - sed -e 's/${DATABASE_URL}/'${DATABASE_URL}/g docker-compose.unittests.yml.tmpl  > docker-compose.unittests.yml
-  - sed -e 's/${DATABASE_URL}/'${DATABASE_URL}/g docker-compose.newmantests.yml.tmpl  > docker-compose.newmantests.yml
+  - sed -e 's|${DATABASE_URL}|'"$DATABASE_URL"'|g' docker-compose.unittests.yml.tmpl  > docker-compose.unittests.yml
+  - sed -e 's|${DATABASE_URL}|'"$DATABASE_URL"'|g' docker-compose.newmantests.yml.tmpl  > docker-compose.newmantests.yml
   - docker-compose build
 
 script:
